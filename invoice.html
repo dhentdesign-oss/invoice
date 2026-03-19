@@ -180,7 +180,16 @@ tbody td:last-child { text-align: right; font-weight: 600; font-family: var(--mo
   set('inv-id',p.get('orderid')); set('inv-nama',p.get('nama')); set('inv-hp',p.get('wa'));
   set('inv-email',p.get('email')); set('inv-prov',p.get('prov')); set('inv-alamat',p.get('alamat'));
   set('inv-tgl',p.get('tanggal')); set('inv-tgl-lunas',p.get('tanggal')); set('inv-kurir',p.get('kurir'));
-  set('inv-metode',p.get('metode')); set('inv-total',p.get('total')); set('inv-subtotal',p.get('total'));
+  // Format angka ke Rupiah
+  function fmtRp(val) {
+    if (!val) return 'Rp 0';
+    var n = parseInt(val.toString().replace(/[^0-9]/g, '')) || 0;
+    return 'Rp ' + n.toLocaleString('id-ID');
+  }
+  set('inv-metode', p.get('metode'));
+  set('inv-total',    fmtRp(p.get('total')));
+  set('inv-subtotal', fmtRp(p.get('total')));
+  set('inv-ongkir',   fmtRp(p.get('ongkir') || '0'));
   set('inv-note',p.get('pesan')); set('inv-bank',p.get('bank')||'BRI');
   var raw=p.get('items');
   if(raw){try{
